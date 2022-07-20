@@ -147,7 +147,7 @@ Will be updated on startup of the sensor module and when sensor selection change
 - [sensors_status](sensors_status.md) — Sensor check metrics. This will be zero for a sensor that's primary or unpopulated.
 - [sensors_status_imu](sensors_status_imu.md) — Sensor check metrics. This will be zero for a sensor that's primary or unpopulated.
 - [system_power](system_power.md)
-- [takeoff_status](takeoff_status.md) — Status of the takeoff state machine currently just availble for multicopters
+- [takeoff_status](takeoff_status.md) — Status of the takeoff state machine currently just available for multicopters
 - [task_stack_info](task_stack_info.md) — stack information for a single running process
 - [tecs_status](tecs_status.md)
 - [telemetry_status](telemetry_status.md)

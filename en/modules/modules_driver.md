@@ -153,7 +153,7 @@ batt_smbus <command> [arguments...]
    unseal        Unseals the devices flash memory to enable write_flash
                  commands.
 
-   seal          Seals the devices flash memory to disbale write_flash commands.
+   seal          Seals the devices flash memory to disable write_flash commands.
 
    suspend       Suspends the driver from rescheduling the cycle.
 
@@ -996,7 +996,7 @@ The command to start this driver is:
  $ roboclaw start <device> <baud>
 
 `<device>` is the name of the UART port. On the Pixhawk 4, this is `/dev/ttyS3`.
-`<baud>` is te baud rate.
+`<baud>` is the baud rate.
 
 All available commands are:
 
@@ -1093,7 +1093,7 @@ This module controls the TAP_ESC hardware via UART. It listens on the
 actuator_controls topics, does the mixing and writes the PWM outputs.
 
 ### Implementation
-Currently the module is implementd as a threaded version only, meaning that it
+Currently the module is implemented as a threaded version only, meaning that it
 runs in its own thread instead of on the work queue.
 
 ### Example

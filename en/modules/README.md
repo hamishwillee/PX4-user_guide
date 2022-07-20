@@ -1,6 +1,6 @@
 # Modules
 
-This is a placholder to create the modules.
+This is a placeholder to create the modules.
 
 Directory contains:
 

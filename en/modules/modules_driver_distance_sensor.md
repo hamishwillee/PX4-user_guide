@@ -242,7 +242,7 @@ Source: [drivers/distance_sensor/pga460](https://github.com/PX4/PX4-Autopilot/tr
 Ultrasonic range finder driver that handles the communication with the device and publishes the distance via uORB.
 
 ### Implementation
-This driver is implented as a NuttX task. This Implementation was chosen due to the need for polling on a message
+This driver is implemented as a NuttX task. This Implementation was chosen due to the need for polling on a message
 via UART, which is not supported in the work_queue. This driver continuously takes range measurements while it is
 running. A simple algorithm to detect false readings is implemented at the driver levelin an attemptto improve
 the quality of data that is being published. The driver will not publish data at all if it deems the sensor data

@@ -330,8 +330,8 @@ Functions include:
 - `Servo 1` to `Servo 8`: Servo output.
    These are further assigned a specific meaning based on airframe, such as "tilt servo", "left aileron".
 - `Offboard Acutator Set 1` to `Offboard Acutator Set 6`: [MAVLink Payload output](../payloads/README.md#cargo-drones-actuator-payloads).
-- `Landing Gear`: Output is landing gear.
-- `Parachute`: Output is parachute.
+- `Landing Gear`: Output is [landing gear](#landing-gear-setup).
+- `Parachute`: Output is a [parachute](#parachute-setup).
   The minimum value is sent in normal use and the maximum value is emitted when a failsafe is triggered.
 - `RC Roll`: Output is passthrough roll from RC ([RC_MAP_ROLL](../advanced_config/parameter_reference.md#RC_MAP_ROLL) maps an RC channel to this output).
   An RC channel is mapped to the output using .
@@ -518,7 +518,7 @@ For each of the control surfaces:
    - After setting the trim for a control surface, move its slider away from the center, release, and then back into disarmed (middle) position.
      Confirm that surface is in the neutral position.
 
-	 Note that you **must** move the slider _even if it is already in the middle position_ (it doesn't start getting commands until it has been moved).
+     Note that you **must** move the slider _even if it is already in the middle position_ (it doesn't start getting commands until it has been moved).
 
 
 :::note
@@ -544,6 +544,29 @@ For each of the tilt servos:
 
    ![Tilt Servo Geometry Setup](../../assets/config/actuators/tilt_servo_geometry_config.png)
 3. Position the slider for the servo in the highest position, and verify that positive motor thrust will point towards the `Angle at Max Tilt` (as defined in the Geometry section).
+
+### Landing Gear Setup
+
+Landing gear is triggered using a servo connected to an output mapped to the `Landing gear` output function.
+
+![Tilt Servo Geometry Setup](../../assets/config/actuators/qgc_actuators_landing_gear.png)
+
+For the landing gear output:
+
+1. If the landing gear moves in the wrong when you move the slider, select the `Rev range` checkbox.
+1. Push the slider to maximum and verify that gear is up.
+   If not then raise the `Maximum` value on the output until it is raised.
+1. Push the slider to minimum and verify that gear is down.
+   If not, reduce the `Minimum` value on the output until it is correctly lowered.
+
+### Parachute Setup
+
+Parachutes may be triggered using a servo connected to an output mapped to the `Parachute` output function.
+The output is automatically set to the maximum PWM value when a failsafe is triggered.
+
+![Tilt Servo Geometry Setup](../../assets/config/actuators/qgc_actuators_parachute.png)
+
+Parachute setup and testing is covered in [Parachutes](../peripherals/parachute.md) 
 
 ### Other Notes
 

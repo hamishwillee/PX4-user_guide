@@ -462,7 +462,7 @@ If working on a custom build that has other messages, you would:
 ## ros2 CLI
 
 The [ros2 CLI](https://docs.ros.org/en/foxy/Tutorials/Beginner-CLI-Tools.html) is a useful tool for working with ROS.
-You can use it, for example, to inspect topics, and launch complex ROS systems.
+You can use it, for example, to quickly check whether topics are being published, and also inspect them in detail if you have `px4_msg` in the workspace. The command also lets you launch more complex ROS systems via a launch file.
 A few possibilities are demonstrated below.
 
 ### ros2 topic list

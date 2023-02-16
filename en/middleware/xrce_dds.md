@@ -103,7 +103,7 @@ The development version, fetched using `--edge` above, does work.
 ### Build/Run within ROS2 Workspace
 
 The agent can be built and launched within a ROS2 workspace (or build standalone and launched from a workspace.
-You must already have installed ROS 2 following the instructions in: [ROS 2 User Guide > Install ROS 2](##TBDXXX)
+You must already have installed ROS 2 following the instructions in: [ROS 2 User Guide > Install ROS 2](../ros/ros2_comm.md#install-ros-2).
 
 To build the agent within ROS:
 

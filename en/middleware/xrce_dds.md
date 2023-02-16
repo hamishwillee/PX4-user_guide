@@ -161,11 +161,16 @@ For example, the PX4 simulator runs the XRCE-DDS client over UDP on port 8888, s
 MicroXRCEAgent udp4 -p 8888
 ```
 
+On RaspberryPi, if you're using a serial link and connected to the IO pins, you might connect using this command:
+
+```sh
+sudo MicroXRCEAgent serial --dev /dev/AMA0 -b 921600
+```
+
 ### Starting the Client
 
 The XRCE-DDS client module ([microdds-client](../modules/modules_system.md#microdds-client)) is included by default in all firmware and the simulator.
 This must be started with appropriate settings for the communication channel that you wish to use to communicate with the agent.
-See [microdds-client](../modules/modules_system.md#microdds-client) for all the command line options.
 
 On the simulator the client is automatically started on localhost UDP port 8888 using the default microdds namespace:
 
@@ -173,17 +178,44 @@ On the simulator the client is automatically started on localhost UDP port 8888 
 microdds_client start -t udp -p 8888
 ```
 
-If the flight controller and companion computer are connected using a serial cable you might specify serial port options as shown below:
+On flight controller hardware the client should be configured using the [Micro XRCE-DDS parameters](../advanced_config/parameter_reference.md#micro-xrce-dds):
+
+- [XRCE_DDS_0_CFG](../advanced_config/parameter_reference.md#XRCE_DDS_0_CFG): Set the port to connect on, such as `TELEM2`, `Ethernet`, or `Wifi`.
+  - [XRCE_DDS_UDP_PRT](../advanced_config/parameter_reference.md#XRCE_DDS_UDP_PRT):
+    If using an Ethernet connect, use this to specify the UDP port.
+  - [SER_TEL2_BAUD](../advanced_config/parameter_reference.md#SER_TEL2_BAUD), [SER_URT6_BAUD](../advanced_config/parameter_reference.md#SER_URT6_BAUD) (and so on):
+    If using a serial connection, the baud rate must be set using the `_BAUD` parameter associated with the serial port.
+    For example, you'd set a value for `SER_TEL2_BAUD` if you are connecting to the companion using `TELEM2`.
+    For more information see [Serial port configuration](../peripherals/serial_configuration.md#serial-port-configuration).
+
+  Some setups might also need these parameters to be set:
+
+  - [XRCE_DDS_KEY](../advanced_config/parameter_reference.md#XRCE_DDS_KEY): The XRCE-DDS key.
+    If you're working in a multi-client, single agent configuration, each client should have a unique key.
+  - [XRCE_DDS_DOM_ID](../advanced_config/parameter_reference.md#XRCE_DDS_DOM_ID): TBD.
+
+:::note
+Many ports are already have a default configuration.
+To use these ports you must first disable the existing configuration:
+
+- `TELEM1` and `TELEM2` are set up by default to connect via MAVLink to a GCS and a companion computer (respectively).
+  Disable by setting [MAV_0_CONFIG=0](../advanced_config/parameter_reference.md#MAV_0_CONFIG) or [MAV_1_CONFIG=0](../advanced_config/parameter_reference.md#MAV_1_CONFIG) to zero.
+  See [MAVLink Peripherals](../peripherals/mavlink_peripherals.md) for more information.
+- Other ports can similarly be configured.
+  See [Serial port configuration](../peripherals/serial_configuration.md#serial-port-configuration).
+:::
+
+Once set, you may need to reboot PX4 for the parameters to take effect. They will then perist through subseqent reboots.
+
+
+While not recommended, you can also start the [microdds-client](../modules/modules_system.md#microdds-client) using a command line.
+This can be called as part of [System Startup](../concept/system_startup.md) or through the [MAVLink Shell](../debug/mavlink_shell.md) (or a system console).
+For example:
 
 ```sh
 microdds_client start -t serial -d /dev/ttyS3 -b 921600
 ```
 
-:::note
-There are a number of ways to add the command to [System Startup](../concept/system_startup.md).
-During development the easiest way is to add the command to a file on the SD card named [etc/extras.txt](../concept/system_startup.md#starting-additional-applications-extras-txt).
-You can also send commands at runtime using the [MAVLink Shell](../debug/mavlink_shell.md) (or a system console).
-:::
 
 ## Supported uORB Messages
 

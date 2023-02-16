@@ -15,7 +15,7 @@ In particular it covers the options that are most important to PX4 users.
 
 ## Architecture
 
-The XRCE-DDS middleware consists of a client running on PX4 and an agent running on the companion computer, with bi-directional data exchange between them over a serial, UDP, TCP or custom link.
+The XRCE-DDS middleware consists of a client running on PX4 and an agent running on the companion computer, with bi-directional data exchange between them over a serial or UDP link.
 The agent acts as a proxy for the client, enabling it to publish and subscribe to topics in the global DDS data space.
 
 ![Architecture XRCE-DDS with ROS 2](../../assets/middleware/xrce_dds/architecture_xrce-dds_ros2.svg)

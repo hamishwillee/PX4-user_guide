@@ -1,43 +1,55 @@
-# XRCE-DDS: PX4-FastDDS Bridge
+# XRCE-DDS (PX4-FastDDS Bridge)
 
 :::note
-XRCE-DDS replaces the Fast-RTPS Bridge used in PX4 v1.13.
+XRCE-DDS replaces the [Fast-RTPS Bridge](https://docs.px4.io/v1.13/en/middleware/micrortps.html#rtps-dds-interface-px4-fast-rtps-dds-bridge) used in PX4 v1.13.
 :::
 
+PX4 uses XRCE-DDS middlware to allow [uORB messages](../middleware/uorb.md) to be published and subscribed on a companion computer as though they were ROS 2 topics.
+This provides a fast and reliable integration between PX4 and ROS2, and makes it much easier for ROS 2 applications to get vehicle information and send commands. 
+
+PX4 uses an XRCE-DDS implementation that leverages [eProsima Micro XRCE-DDS](https://micro-xrce-dds.docs.eprosima.com/en/stable/introduction.html).
+
+The following guide describes the architecture and various options for setting up the client and agent.
+In particular it covers the options that are most important to PX4 users.
 
 
-### Start XRCE-DDS
+## Architecture
 
-In order to for ROS2 to communicate with PX4 you will need _XRCE-DDS client_ running on PX4, connected to the _XRCE-DDS agent_ running on the companion.
+The XRCE-DDS middleware consists of a client running on PX4 and an agent running on the companion computer, with bi-directional data exchange between them over a serial, UDP, TCP or custom link.
+The agent acts as a proxy for the client, enabling it to publish and subscribe to topics in the global DDS data space.
 
-The XRCE-DDS client is present on all PX4 main builds, and releases _after_ PX4 v1.13, and is started automatically on the Simulator.
-You will have to install/build and start the XRCE-DDS agent on the companion.
+![Architecture XRCE-DDS with ROS 2](../../assets/middleware/xrce_dds/architecture_xrce-dds_ros2.svg)
 
-<!-- check if micro ros replace or uses xrce_dds. I think both are running -->
+In order for PX4 uORB topics to be shared on the DDS network you will need _XRCE-DDS client_ running on PX4, connected to the _XRCE-DDS agent_ running on the companion.
 
-#### XRCE-DDS Client Setup for Simulator
+The PX4 [microdds-client](../modules/modules_system.md#microdds-client) publishes to/from a defined set of uORB topics to the global DDS data space.
 
-You don't need to do any client setup if connecting to the simulator!
+The [eProsima XRCE-DDS _agent_](https://github.com/eProsima/Micro-XRCE-DDS-Agent) runs on the companion computer and acts as a proxy for the client in the DDS/ROS2 network.
 
-For the simulator the client is started by default on localhost UDP port 8888.
+The agent itself has no dependency on client-side code and can be built and/or installed independent of PX4 or ROS.
 
-#### XRCE-DDS Client Setup for Flight Controllers
-
-When connecting to flight controller hardware you will need to start the [microdds-client](../modules/modules_system.md#microdds-client) module with appropriate settings for your communications channel.
-For example, to start the module over a serial link you might use a command like this (see [microdds-client](../modules/modules_system.md#microdds-client) for all the options):
-
-```sh
-microdds_client start -t serial -d /dev/ttyS3 -b 921600
-```
-
-During development the easiest way to start the module is to create a file on the SD card named [etc/extras.txt](../concept/system_startup.md#starting-additional-applications-extras-txt) with the command (see [System Startup](../concept/system_startup.md) for other ways to add this to the system startup)).
-You can also enter the command at runtime using the [MAVLink Shell](../debug/mavlink_shell.md) (or a system console).
+Code that wants to subscribe/publish to PX4 does have a dependency on client-side code; it requires uORB message definitions that match those used to create the PX4 XRCE-DDS client so that it can interpret the messages.
 
 
+## Code Generation
 
-## XRCE-DDS Agent Installation & Usage
+The PX4 [microdds-client](../modules/modules_system.md#microdds-client) is generated at build time and included in PX4 firmare by default.
+The agent has no dependency on client code.
+It can be built standalone or in a ROS2 workspace, or installed as a snap package on Ubuntu.
+
+When PX4 is built, a code generator uses the uORB message definitions in the source tree ([PX4-Autopilot/msg](https://github.com/PX4/PX4-Autopilot/tree/main/msg)) to compile support for the subset of uORB topics in [PX4-Autopilot/src/modules/microdds_client/dds_topics.yaml](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/microdds_client/dds_topics.yaml) into [microdds-client](../modules/modules_system.md#microdds-client).
+
+PX4 main or release builds automatically export the set of uORB messages definitions in the build to an associated branch in [PX4/px4_msgs](https://github.com/PX4/px4_msgs).
+
+ROS 2 applications need to be built in a workspace that includes the _same_ message definitions that were used to create the XRCE-DDS client module in the PX4 Firmware.
+These can be included into a workspace by cloning the [PX4/px4_msgs](https://github.com/PX4/px4_msgs) into your ROS2 workspace and switching to the appropriate branch.
+Note that all code generation associated with the messages is handled by ROS 2.
+
+
+## XRCE-DDS Agent Installation
 
 The XRCE-DDS Agent can be installed on the companion computer using a binary package, built and installed from source, or built and run from within a ROS2 workspace.
+All of these methods fetch _all_ the dependencies needed to communicate with the client (such as FastCDR)
 
 :::note
 The official (and more complete) installation guide is the Eprosima: [micro XRCE-DDS Installation Guide](https://micro-xrce-dds.docs.eprosima.com/en/latest/installation.html)
@@ -69,7 +81,7 @@ To start the agent with settings for connecting to the XRCE-DDS client running o
 MicroXRCEAgent udp4 -p 8888
 ```
 
-### Install Standalone from Snap Package
+### Install from Snap Package
 
 Install from a snap package on Ubuntu using the following command:
 
@@ -88,7 +100,7 @@ At time of writing the stable of version installed from snap connects to PX4 but
 The development version, fetched using `--edge` above, does work.
 :::
 
-### Install within ROS2 Workspace
+### Build/Run within ROS2 Workspace
 
 The agent can be built and launched within a ROS2 workspace (or build standalone and launched from a workspace.
 You must already have installed ROS 2 following the instructions in: [ROS 2 User Guide > Install ROS 2](##TBDXXX)
@@ -131,363 +143,116 @@ To run the XRCE-DDS agent in the workspace:
    MicroXRCEAgent udp4 -p 8888
    ```
 
-### Using the Agent
+## Starting XRCE-DDS
 
-The agent is used to connect to the client over a particular channel, such as UDP or a serial connection, and must be started with the correct setting for the channel and ports.
-You should create a single instance of the agent for each channel over which you need to connect 
+### Starting the Agent
 
-The PX4 simulator runs the XRCE-DDS client over UDP on port 8888, so to connect to the simulator you would start the agent with the command:
+The agent is used to connect to the client over a particular channel, such as UDP, TCP, or a serial connection.
+The channel settings are specified when the agent is started, using command line options. 
+These are documented in the eProsima user guide: [Micro XRCE-DDS Agent > Agent CLI](https://micro-xrce-dds.docs.eprosima.com/en/latest/agent.html#agent-cli). <!-- what options work? i.e. does PX4 allow CAN? -->
+
+:::note
+You should create a single instance of the agent for each channel over which you need to connect.
+:::
+
+For example, the PX4 simulator runs the XRCE-DDS client over UDP on port 8888, so to connect to the simulator you would start the agent with the command:
 
 ```sh
 MicroXRCEAgent udp4 -p 8888
 ```
 
-The agent options for connecting to different channels are documented in the eProsima user guide: [Micro XRCE-DDS Agent > Agent CLI](https://micro-xrce-dds.docs.eprosima.com/en/latest/agent.html#agent-cli).
+### Starting the Client
 
+The XRCE-DDS client module ([microdds-client](../modules/modules_system.md#microdds-client)) is included by default in all firmware and the simulator.
+This must be started with appropriate settings for the communication channel that you wish to use to communicate with the agent.
+See [microdds-client](../modules/modules_system.md#microdds-client) for all the command line options.
 
+On the simulator the client is automatically started on localhost UDP port 8888 using the default microdds namespace:
 
+```
+microdds_client start -t udp -p 8888
+```
 
+If the flight controller and companion computer are connected using a serial cable you might specify serial port options as shown below:
 
-## Custom uORB/ROS2 Topics
+```sh
+microdds_client start -t serial -d /dev/ttyS3 -b 921600
+```
 
-ROS 2 needs to have the _same_ message definitions that were used to create the XRCE-DDS client module in the PX4 Firmware.
-These are automatically exported to [PX4/px4_msgs](https://github.com/PX4/px4_msgs) for main and release builds, and you can just clone them into your workspace.
+:::note
+There are a number of ways to add the command to [System Startup](../concept/system_startup.md).
+During development the easiest way is to add the command to a file on the SD card named [etc/extras.txt](../concept/system_startup.md#starting-additional-applications-extras-txt).
+You can also send commands at runtime using the [MAVLink Shell](../debug/mavlink_shell.md) (or a system console).
+:::
 
-If working on a custom build that has other messages, you would:
-- update the [dds_topics.yaml](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/microdds_client/dds_topics.yaml) to add needed topics to your PX4 build.
-- Copy the msg definitions out of PX4 source tree into any ROS2 workspace that needs them.
+## Supported uORB Messages
+
+The set of [PX4 uORB topics](../msg_docs/README.md) that are exposed through the client are set in [dds_topics.yaml](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/microdds_client/dds_topics.yaml).
+
+The topics are release specific (support is compiled into [microdds-client](../modules/modules_system.md#microdds-client) at build time).
+While most releases should support a very similar set of messages, to be certain you would need to check the yaml file for your particular release.
+<!-- Jublish the set we use?: https://github.com/PX4/px4_msgs/issues/22 -->
+
+Note that ROS 2/DDS needs to have the _same_ message definitions that were used to create the XRCE-DDS client module in the PX4 Firmware in order to interpret the messages:
+
+- If you're using a main or release version of PX4 you can get these by cloning [PX4/px4_msgs](https://github.com/PX4/px4_msgs) into your workspace (branches are provided for each release).
+- If you're creating your own new topic you will need to update [dds_topics.yaml](https://github.com/PX4/PX4-Autopilot/blob/main/src/modules/microdds_client/dds_topics.yaml) and also copy the message definitions out of PX4 source tree into any ROS2 workspace that needs them.
   The messages must be in a folder named `px4_msgs/msg/`.
   
   :::note
-  ROS2 messages are sent with the topic and type name defined the yaml file, but do not include the message definition itself (which is why these have to be supplied to the ROS2 workspace, and have to match the message that is sent).
-  For example, the following yaml entry defines the `px4_msgs::msg::VehicleOdometry` type.
+  Technically the messages must be in a folder defined by the `type` prefix in the yaml file:
+  As you can see below, this is `px4_msgs::msg::`:
+  
   ```yaml
   - topic: /fmu/out/vehicle_odometry
     type: px4_msgs::msg::VehicleOdometry
   ```
-
-  The ROS toolchain uses the prefix in the message type (i.e. `px4_msgs::msg::`) to determine the search path for message definitions.
   :::
 
+
+### PX4 ROS2 QoS Settings
+
+PX4 QoS settings for publishers are incompatible with the default QoS settings for ROS2 subscribers.
+So if ROS2 code needs to subscribe to a uORB topic, it will need to use compatible QoS settings.
+One example of which is shown in [ROS 2 User Guide > ROS2 Subscriber QoS Settings]()
+
+PX4 uses the following QoS settings for publishers:
+
+```cpp
+uxrQoS_t qos = {
+  .durability = UXR_DURABILITY_TRANSIENT_LOCAL,
+  .reliability = UXR_RELIABILITY_BEST_EFFORT,
+  .history = UXR_HISTORY_KEEP_LAST,
+  .depth = 0,
+};
+```
+
+PX4 uses the following QoS settings for subscribers:
+
+```cpp
+uxrQoS_t qos = {
+  .durability = UXR_DURABILITY_VOLATILE,
+  .reliability = UXR_RELIABILITY_BEST_EFFORT,
+  .history = UXR_HISTORY_KEEP_LAST,
+  .depth = queue_depth,
+};
+```
+
+ROS2 uses the following QoS settings (by default) for publishers and subscriptions: "keep last" for history with a queue size of 10, "reliable" for reliability, "volatile" for durability, and "system default" for liveliness.
+Deadline, lifespan, and lease durations are also all set to "default".
+<!-- From https://github.com/PX4/PX4-user_guide/pull/2259#discussion_r1099788316 -->
+
+## Helpful Resources
+
+- [ROS2 in PX4: ROS2 in PX4: Technical Details of a Seamless Transition to XRCE-DDS](https://www.youtube.com/watch?v=F5oelooT67E) - Pablo Garrido & Nuno Marques (youtube)
+- [PX4 ROS2 offboard tutorial](https://gist.github.com/julianoes/adbf76408663829cd9aed8d14c88fa29) (Github gist - JulianOes)
+- [ROS2 PX4 Offboard Tutorial](https://github.com/Jaeyoung-Lim/px4-offboard/blob/2d784532fd323505ac8a6e53bb70145600d367c4/doc/ROS2_PX4_Offboard_Tutorial.md) (Jaeyoung-Lim).
 
 
 
 <!---
-
-The *PX4-Fast RTPS(DDS) Bridge*, which is also referred to as as the *microRTPS Bridge*, adds a Real Time Publish Subscribe (RTPS) interface to the PX4 Autopilot, enabling the exchange of [uORB messages](../middleware/uorb.md) between the various PX4 Autopilot internal components and (offboard) *Fast DDS* applications in realtime.
-
-This allows us to better integrate with applications running and linked in DDS domains (including ROS nodes), making it easy to share sensor data, commands, and other vehicle information.
-
-The following guide describes the RTPS/DDS bridge architecture, and shows the reader how to write a simple *Fast DDS* application to subscribe to telemetry updates from the PX4 Autopilot.
-
-:::note
-RTPS is the underlying protocol of the Object Management Group's (OMG) Data Distribution Service (DDS) standard.
-It aims to enable scalable, real-time, dependable, high-performance and inter-operable data communication using the publish/subscribe pattern.
-
-*Fast DDS* is a very lightweight cross-platform implementation of the latest version of the RTPS protocol / DDS middleware.  It was previously named *Fast RTPS*.
-:::
-
-## When should RTPS be used?
-
-RTPS should be used when you need to reliably share time-critical/real-time information between the flight controller and offboard components. It is instrumental in cases where offboard software needs to become a *peer* of software components running in PX4 (sending and receiving uORB topics).
-
-Possible use cases include communicating with robotics libraries for computer vision and other use cases where real-time data to/from actuators and sensors is essential for vehicle control.
-
-*Fast DDS* is not intended as a replacement for MAVLink. [MAVLink](../middleware/mavlink.md) remains the most appropriate protocol for communicating with ground stations, gimbals, cameras, and other offboard components (although *Fast DDS* may open other opportunities for working with some peripherals at higher frequencies).
-
-:::tip
-It is possible to use Fast RTPS(DDS) over slower links (e.g., radio telemetry) by being mindful of your link's extra constraints. Keep in mind you can easily overload your telemetry channel.
-:::
-
-## Architectural overview
-
-### microRTPS Bridge
-
-The *microRTPS* bridge exchanges messages between PX4 and DDS-participant applications, seamlessly converting between the [uORB](../middleware/uorb.md) and RTPS/DDS messages used by each system.
-
-![basic example flow](../../assets/middleware/micrortps/architecture.png)
-
-The main elements of the architecture are the client and agent processes shown in the diagram above.
-
-#### The microRTPS Client
-The *Client* is the PX4 Autopilot middleware daemon process that runs on the flight controller. This client subscribes to uORB topics published by other PX4 Autopilot components and sends any updates to the *Agent* (via a UART or UDP port), and also receives messages from the *Agent* and publishes them as uORB messages to the PX4 Autopilot.
-
-#### The microRTPS Agent
-
-The *Agent* runs as a daemon process on an offboard computer (outside the flight controller). This agent watches for uORB update messages from the *Client* and (re)publishes them over RTPS, and also subscribes to "uORB" RTPS/DDS messages from other DDS-participant applications and forwards them to the *Client*.
-
-#### microRTPS Agent/Client Communication
-The *Agent* and *Client* are connected via a serial link (UART) or UDP network, and the uORB information is [CDR serialized](https://en.wikipedia.org/wiki/Common_Data_Representation) before being sent (*CDR serialization* provides a common format for exchanging serial data between different platforms).
-
-The *Agent* and any *Fast DDS* applications are connected via UDP and may be on the same or another device. In a typical configuration, they will be on the same system (e.g., a development computer, Linux companion computer, or compute board), connected to the *Client*. This can be through a Wifi link or USB.
-
-## Code generation
-
-### Dependencies
-Fast DDS 2.0.0 or later and Fast-RTPS-Gen 1.0.4 (not later!) must be installed in order to generate the required code, and continue to the next steps. [Follow the installation guide.](../dev_setup/fast-dds-installation.md)
-
-:::note
-RTPS has been adopted as the middleware for the ROS 2 (Robot Operating System).
-
-For information about how to use this interface within the ROS 2 applications and development workflows, see [PX4-ROS 2 bridge](../ros/ros2_comm.md).
-:::
-
-### Fast RTPS(DDS) Applications (ROS Independent)
-
-All the code needed to create, build and use the bridge is automatically generated when PX4-Autopilot is compiled.
-
-The *Client* application is also compiled and built into the firmware as part of the normal build process.
-The *Agent* must be separately/manually compiled for the target computer.
-
-:::tip
-Most users will not need to do so. Still, the bridge can be [manually generated](micrortps_manual_code_generation.md), providing a more detailed overview of the build process and useful for troubleshooting.
-:::
-
-## Supported uORB messages
-
-The generated bridge code will enable a specified subset of uORB topics to be published/subscribed via RTPS, regardless if you are deploying a ROS application or not.
-
-For *automatic code generation* there's a *yaml* definition file in the PX4 **PX4-Autopilot/msg/tools/** directory called **uorb_rtps_message_ids.yaml**. This file defines the set of uORB messages to be used with RTPS, whether the messages are to be sent, received or both, and the RTPS ID for the message to be used in DDS/RTPS middleware.
-
-:::note
-It's essential to note that every RTPS message **needs** an ID to be set in this file.
-:::
-
-```yaml
-rtps:
-  - msg: actuator_armed
-    id: 0
-  - msg: actuator_control
-    id: 1
-  - ...
-  - msg: airspeed
-    id: 5
-    send: true
-  - msg: battery_status
-    id: 6
-    send: true
-  - msg: camera_capture
-    id: 7
-  - msg: camera_trigger
-    id: 8
-    receive: true
-  - ...
-  - msg: sensor_baro
-    id: 63
-    receive: true
-    send: true
-```
-
-<a id="client_firmware"></a>
-## Client (PX4/PX4-Autopilot)
-
-The *Client* source code is generated, compiled and built into the PX4 Autopilot firmware as part of the normal build process.
-
-To build the PX4 Autopilot firmware for NuttX/Pixhawk flight controllers use the `_rtps` feature in the configuration target.
-
-For example, to build RTPS for px4_fmu-v4:
-```sh
-make px4_fmu-v4_rtps
-```
-
-To build the firmware for a SITL target:
-```sh
-make px4_sitl_rtps
-```
-
-The *Client* application can be launched from [NuttShell/System Console](../debug/system_console.md).
-The command syntax is shown below (you can specify a variable number of arguments):
-
-```sh
-> micrortps_client start|stop|status [options]
-  -t <transport>          [UART|UDP] Default UART
-  -d <device>             UART device. Default /dev/ttyACM0
-  -l <loops>              How many iterations will this program have. -1 for infinite. Default -1.
-  -w <sleep_time_ms>      Time in ms for which each iteration sleep. Default 1ms
-  -b <baudrate>           UART device baudrate. Default 460800
-  -p <poll_ms>            Time in ms to poll over UART. Default 1ms
-  -r <reception port>     UDP port for receiving. Default 2019
-  -s <sending port>       UDP port for sending. Default 2020
-  -i <ip_address>         Select IP address (remote) values: <x.x.x.x>. Default: 127.0.0.1
-```
-
-:::note
-By default the *Client* runs as a daemon, but it does not automatically start, and must be manually launched.
-
-The PX4 Autopilot firmware initialization code may in future automatically start the *Client* as a permanent daemon process.
-:::
-
-For example, in order to run the *Client* daemon with SITL connecting to the Agent via UDP:
-
-```sh
-micrortps_client start -t UDP
-```
-
-## Agent in an Offboard Fast DDS interface (ROS-independent)
-
-The *Agent* code is automatically *generated* when you build the associated PX4 Autopilot firmware, and you can find the source here: `build/<target-platform>/src/modules/micrortps_bridge/micrortps_client/micrortps_agent/`.
-
-To build the *Agent* application, compile the code:
-
-```sh
-cd build/<target-platform>/src/modules/micrortps_bridge/micrortps_client/micrortps_agent
-mkdir build && cd build
-cmake ..
-make
-```
-
-The command syntax for the *Agent* is listed below:
-
-```sh
-$ ./micrortps_agent [options]
-  -t <transport>          [UART|UDP] Default UART.
-  -d <device>             UART device. Default /dev/ttyACM0.
-  -w <sleep_time_us>      Time in us for which each iteration sleep. Default 1ms.
-  -b <baudrate>           UART device baudrate. Default 460800.
-  -p <poll_ms>            Time in ms to poll over UART. Default 1ms.
-  -r <reception port>     UDP port for receiving. Default 2019.
-  -s <sending port>       UDP port for sending. Default 2020.
-  -n <set namespace>      Set a namespace for the micrortps_agent.
-```
-
-To launch the *Agent*, run `micrortps_agent` with appropriate options for specifying the connection to the *Client* (the default options connect from a Linux device to the *Client* over a UART port).
-
-As an example, to start the *micrortps_agent* with connection through UDP, issue:
-
-```sh
-./micrortps_agent -t UDP
-```
-
-## Creating a Fast DDS Listener application
-
-Once the *Client* (on the flight controller) and the *Agent* (on an offboard computer) are running and connected, *Fast DDS* applications can publish and subscribe to uORB topics on the PX4 Autopilot using RTPS.
-
-This example shows how to create a *Fast DDS* "listener" application that subscribes to the `sensor_combined` topic and prints out updates published from the PX4 Autopilot. A connected RTPS application can run on any computer on the same network as the *Agent*. For this example the *Agent* and *Listener application* will be on the same computer.
-
-The *fastrtpsgen* script can be used to generate a simple RTPS application from an IDL message file.
-
-:::note
-RTPS messages are defined in IDL files and compiled to C++ using *fastrtpsgen*.
-
-When building the bridge code, IDL files are generated for the uORB messages that may be sent/received, these IDL files are needed when you create a Fast DDS application to communicate with the PX4 Autopilot.
-
-You can find them in following path per build target:
-**build/BUILDPLATFORM/src/modules/micrortps_bridge/micrortps_agent/idl/*.idl**.
-:::
-
-Enter the following commands to create the application:
-
-```sh
-cd /path/to/PX4/PX4-Autopilot
-cd build/px4_sitl_rtps/src/modules/micrortps_bridge
-mkdir micrortps_listener
-cd micrortps_listener
-fastrtpsgen -example x64Linux2.6gcc ../micrortps_agent/idl/sensor_combined.idl
-```
-
-This creates a basic subscriber and publisher, and a main-application that you can run. 
-
-In order to print the data from the sensor combined topic, modify the following methods in **sensor_combined_Subscriber.cxx**:
-- `init()`: To change the subscription topic name (by default, the micrortps agent publishes the data on the named topic: `fmu/sensor_combined/out`),
-- `onNewDataMessage()`: To print the received sensor combined data.
-
-```cpp
-bool sensor_combinedSubscriber::init(Subscriber* sub)
-{
-    // Create RTPSParticipant
-
-    ParticipantAttributes PParam;
-    PParam.rtps.setName("Participant_subscriber"); //You can put the name you want
-    mp_participant = Domain::createParticipant(PParam);
-    if(mp_participant == nullptr)
-    {
-        return false;
-    }
-
-    //Register the type
-
-    Domain::registerType(mp_participant, static_cast<TopicDataType*>(&myType));
-
-    // Create Subscriber
-
-    SubscriberAttributes Rparam;
-    Rparam.topic.topicKind = NO_KEY;
-    Rparam.topic.topicDataType = myType.getName(); //Must be registered before the creation of the subscriber
-    Rparam.topic.topicName = "fmu/sensor_combined/out";
-    mp_subscriber = Domain::createSubscriber(mp_participant,Rparam, static_cast<SubscriberListener*>(&m_listener));
-    if(mp_subscriber == nullptr)
-    {
-        return false;
-    }
-    return true;
-}
-```
-
-```cpp
-void sensor_combinedSubscriber::SubListener::onNewDataMessage(Subscriber* sub)
-{
-    // Take data
-    sensor_combined_ st;
-
-    if(sub->takeNextData(&st, &m_info))
-    {
-        if(m_info.sampleKind == ALIVE)
-        {
-            // Print your structure data here.
-            ++n_msg;
-            std::cout << "\n\n\n\n\n\n\n\n\n\n";
-            std::cout << "Sample received, count=" << n_msg << std::endl;
-            std::cout << "=============================" << std::endl;
-            std::cout << "gyro_rad: " << st.gyro_rad().at(0);
-            std::cout << ", " << st.gyro_rad().at(1);
-            std::cout << ", " << st.gyro_rad().at(2) << std::endl;
-            std::cout << "gyro_integral_dt: " << st.gyro_integral_dt() << std::endl;
-            std::cout << "accelerometer_timestamp_relative: " << st.accelerometer_timestamp_relative() << std::endl;
-            std::cout << "accelerometer_m_s2: " << st.accelerometer_m_s2().at(0);
-            std::cout << ", " << st.accelerometer_m_s2().at(1);
-            std::cout << ", " << st.accelerometer_m_s2().at(2) << std::endl;
-            std::cout << "accelerometer_integral_dt: " << st.accelerometer_integral_dt() << std::endl;
-            std::cout << "magnetometer_timestamp_relative: " << st.magnetometer_timestamp_relative() << std::endl;
-            std::cout << "magnetometer_ga: " << st.magnetometer_ga().at(0);
-            std::cout << ", " << st.magnetometer_ga().at(1);
-            std::cout << ", " << st.magnetometer_ga().at(2) << std::endl;
-            std::cout << "baro_timestamp_relative: " << st.baro_timestamp_relative() << std::endl;
-            std::cout << "baro_alt_meter: " << st.baro_alt_meter() << std::endl;
-            std::cout << "baro_temp_celcius: " << st.baro_temp_celcius() << std::endl;
-
-        }
-    }
-}
-```
-
-To build and run the application on Linux:
-
-```sh
-make -f makefile_x64Linux2.6gcc
-bin/*/sensor_combined_PublisherSubscriber subscriber
-```
-
-Now you should see the sensor information being printed out:
-
-```sh
-Sample received, count=10119
-Received sensor_combined data
-=============================
-gyro_rad: -0.0103228, 0.0140477, 0.000319406
-gyro_integral_dt: 0.004
-accelerometer_timestamp_relative: 0
-accelerometer_m_s2: -2.82708, -6.34799, -7.41101
-accelerometer_integral_dt: 0.004
-magnetometer_timestamp_relative: -10210
-magnetometer_ga: 0.60171, 0.0405879, -0.040995
-baro_timestamp_relative: -17469
-baro_alt_meter: 368.647
-baro_temp_celcius: 43.93
-```
-
-:::note
-Make sure the *Client* is running, if the *Listener application* does not print anything.
-:::
+Some of this might be useful.
+I'd like to see a real example first.
 
 ## Setting up the bridge with real hardware
 
@@ -505,22 +270,6 @@ A quick/temporary fix to allow bridge testing during development is to stop MAVL
 ```sh
 mavlink stop-all
 ```
-:::
-
-### Agent not built/fastrtpsgen is not found
-
-The *Agent* code is generated using a *Fast DDS* tool called *fastrtpsgen*.
-
-If you haven't installed Fast DDS in the default path then you must specify its installation directory by setting the `FASTRTPSGEN_DIR` environment variable before executing *make*.
-
-On Linux/Mac this is done as shown below:
-
-```sh
-export FASTRTPSGEN_DIR=/path/to/fastrtps/install/folder/bin
-```
-
-:::note
-This should not be a problem if [Fast DDS is installed in the default location](../dev_setup/fast-dds-installation.md).
 :::
 
 ### Enable UART on a companion computer
@@ -551,11 +300,4 @@ For UART transport on a Raspberry Pi or any other companion computer you will ha
    ```
     enable_uart=1
    ```
-
 -->
-
-## Helpful Resources
-
-- [ROS2 in PX4: ROS2 in PX4: Technical Details of a Seamless Transition to XRCE-DDS](https://www.youtube.com/watch?v=F5oelooT67E) - Pablo Garrido & Nuno Marques (youtube)
-- [PX4 ROS2 offboard tutorial](https://gist.github.com/julianoes/adbf76408663829cd9aed8d14c88fa29) (Github gist - JulianOes)
-- [ROS2 PX4 Offboard Tutorial](https://github.com/Jaeyoung-Lim/px4-offboard/blob/2d784532fd323505ac8a6e53bb70145600d367c4/doc/ROS2_PX4_Offboard_Tutorial.md) (Jaeyoung-Lim).

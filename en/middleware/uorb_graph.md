@@ -7,10 +7,10 @@ Usage instructions are provided [below](#graph-properties).
 
 Search: <input id="search" type="text" >
 Preset: <select id ="select-graph" name="select-graph">
-    <option value='./graph_full_no_mavlink.json'>All Modules (w/o mavlink)</option>
-    <option value='./graph_full.json'>All Modules</option>
+    <option value='./graph_full_no_mavlink.json'>All Modules (w/o mavlink) XX</option>
+    <option value='../graph_full.json'>REL All Modules</option>
     <option value='./graph_px4_sitl.json'>SITL Modules</option>
-    <option value='./graph_px4_fmu-v5.json'>FMUv5 Modules</option>
+    <option value='/graph_px4_fmu-v5.json'>FMUv5 Modules</option>
     <option value='./graph_px4_fmu-v4.json'>FMUv4 Modules</option>
     <option value='./graph_px4_fmu-v2.json'>FMUv2 Modules</option>
 </select>

@@ -1,5 +1,5 @@
 // the d3.js script might not yet be loaded (because it's not in <head>), so we
-import "https://d3js.org/d3.v4.min.js";
+
 // wrap everything in a function and retry until d3 is available
 function initializeGraph() {
     if (typeof d3 === 'undefined') {

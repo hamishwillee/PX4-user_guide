@@ -16,7 +16,7 @@ Preset: <select id ="select-graph" name="select-graph">
 </select>
 <br/>
 <svg id="svg-graph" width="1200" height="1400" style="text-align: center; margin-left: -230px; margin-right: -230px;"></svg>
-<script type="application/javascript" src="../uorb_graph.js" asysc></script>
+<script type="application/javascript" src="./uorb_graph.js" asysc></script>
 
 
 ## Graph Properties

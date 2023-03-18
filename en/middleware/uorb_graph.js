@@ -91,7 +91,7 @@ var link = null;
 function loadSimulation(json_file_name) {
     
     const hrefPath = window.location.href;
-    const dir = loc.substring(0, hrefPath.lastIndexOf('/'));
+    const dir = hrefPath.substring(0, hrefPath.lastIndexOf('/'));
     const pathToJson = `${dir}${json_file_name}`;
     d3.json(pathToJson, function(error, graph) {
         if (error) throw error;

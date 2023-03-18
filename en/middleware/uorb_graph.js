@@ -89,8 +89,10 @@ var text = null;
 var link = null;
 
 function loadSimulation(json_file_name) {
-
-    d3.json(json_file_name, function(error, graph) {
+    
+    const locat = window.location.pathname;
+    const dir = loc.substring(0, locat.lastIndexOf('/'));
+    d3.json(`${dir}${json_file_name}`, function(error, graph) {
         if (error) throw error;
 
         // module filtering (does not remove 'orphaned' topics)

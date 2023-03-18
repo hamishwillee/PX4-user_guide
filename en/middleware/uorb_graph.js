@@ -1,5 +1,4 @@
 // the d3.js script might not yet be loaded (because it's not in <head>), so we
-
 // wrap everything in a function and retry until d3 is available
 function initializeGraph() {
     if (typeof d3 === 'undefined') {
@@ -89,11 +88,8 @@ var text = null;
 var link = null;
 
 function loadSimulation(json_file_name) {
-    
-    const hrefPath = window.location.href;
-    const dir = hrefPath.substring(0, hrefPath.lastIndexOf('/'));
-    const pathToJson = `${dir}/${json_file_name}`;
-    d3.json(pathToJson, function(error, graph) {
+
+    d3.json(json_file_name, function(error, graph) {
         if (error) throw error;
 
         // module filtering (does not remove 'orphaned' topics)

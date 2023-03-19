@@ -7,8 +7,8 @@ Usage instructions are provided [below](#graph-properties).
 
 Search: <input id="search" type="text" >
 Preset: <select id ="select-graph" name="select-graph">
-    <option value='graph_full_no_mavlink.json'>CAll Modules (w/o mavlink) XX</option>
-    <option value='graph_full.json'>CREL All Modules</option>
+    <option value='graph_full_no_mavlink.json'>All Modules (w/o mavlink)</option>
+    <option value='graph_full.json'>All Modules</option>
     <option value='graph_px4_sitl.json'>SITL Modules</option>
     <option value='graph_px4_fmu-v5.json'>FMUv5 Modules</option>
     <option value='graph_px4_fmu-v4.json'>FMUv4 Modules</option>
@@ -16,10 +16,8 @@ Preset: <select id ="select-graph" name="select-graph">
 </select>
 <br/>
 <svg id="svg-graph" width="1200" height="1400" style="text-align: center; margin-left: -230px; margin-right: -230px;"></svg>
-<script type="application/javascript" src="https://cdn.jsdelivr.net/gh/hamishwillee/PX4-user_guide@771657b/en/middleware/uorb_graph.js" asysc></script>
-
-<!-- https://github.com/hamishwillee/PX4-user_guide/blob/v1.22/.vuepress/public/en/middleware/uorb_graph.js -->
-<!-- <script type="application/javascript" src="uorb_graph.js" asysc></script> -->
+<script type="application/javascript" src="https://d3js.org/d3.v4.min.js" asysc></script>
+<script type="application/javascript" src="uorb_graph.js" asysc></script>
 
 
 ## Graph Properties
@@ -40,4 +38,3 @@ The graph has the following properties:
   You can also zoom the image.
 - The *Preset* selection list allows you to refine the list of modules that are shown.
 - The *Search* box can be used to find particular modules/topics (topics that are not selected by the search are greyed-out).
-

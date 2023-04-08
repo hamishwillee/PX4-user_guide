@@ -9,7 +9,7 @@ The image below Messing with a translation. Lets see if we can block this. shows
 ![wiring](../../assets/flight_controller/cuav_pixhawk_v6x/quickstart_01_en.jpg)
 
 | Main interface       | **Function**                                                                                                                                                                                      |
-|:-------------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|:-------------------- |:---------------------------------------d---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | POWER C1             | Connect CAN PMU SE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
 | POWER C2             | Connect CAN PMU SE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
 | POWER 1              | Connect SMbus (I2C) power module                                                                                                                                                                  |

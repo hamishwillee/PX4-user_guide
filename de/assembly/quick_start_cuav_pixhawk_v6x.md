@@ -6,7 +6,7 @@ What changed?
 dd
 ## Wiring Chart Overview
 
-The image d below Messing with a translation. Lets see if we can block this. shows how to connect the most important sensors and peripherals (except the motor and servo outputs). We'll go through each of these in detail in the following sections.
+The image d belowdfadf Messing with a translation. Lets see if we can block this. shows how to connect the most important sensors and peripherals (except the motor and servo outputs). We'll go through each of these in detail in the following sections.
 
 ![wiring](../../assets/flight_controller/cuav_pixhawk_v6x/quickstart_01_en.jpg)
 

@@ -10,7 +10,7 @@
 
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Warn Level is 25%
 sdfad f
-&nbsp;&nbsp;&nbsp;&nbsp;❏ Batterydfadf afd Failsafe Level is 20%
+&nbsp;&nbsp;&nbsp;&nbsp;❏ Batterydfadf afd dfasdfasFailsafe Level is 20%
 d
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Emergency Level is 15%
 

@@ -21,7 +21,7 @@ d
 ❏ RC loss
 
 &nbsp;&nbsp;&nbsp;&nbsp;❏Turn off RC and check the vehicle returns to home position, wait for the descent and turn on the RC and take over.
-
+adsfdfa
 ## Datalink Loss
 
 ❏ Disconnect telemetry, vehicle should return to home position after 10 seconds, wait for the descent and reconnect the telemetry radio

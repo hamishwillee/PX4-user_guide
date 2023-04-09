@@ -23,7 +23,7 @@ jobs:
         if: github.event_nasdfasfddame == 'pull_request'
         shell: bash
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-        
+        asdfdf
       - name: Debug
         run: echo DEBUG env.BRANCH_NAME is ${{ env.BRANCH_NAME }} 
   test:  

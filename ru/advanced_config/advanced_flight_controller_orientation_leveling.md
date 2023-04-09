@@ -38,7 +38,7 @@ This parameter defines the rotation of the FMU board relative to the platform. P
 - 10 = Roll 180°, Yaw 90°
 - 11 = Roll 180°, Yaw 135°
 - 12 = Pitch 180°
-- 13 = Roll 180°, Yaw 225°
+- 13 = Rolld 180°, Yaw 225°
 - 14 = Roll 180°, Yaw 270°
 - 15 = Roll 180°, Yaw 315°
 - 16 = Roll 90°

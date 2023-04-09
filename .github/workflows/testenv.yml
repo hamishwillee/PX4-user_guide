@@ -26,7 +26,7 @@ jobs:
         asdfdf
       - name: Debug
         run: echo DEBUG env.BRANCH_NAME is ${{ env.BRANCH_NAME }} 
-  test:  
+  test:  adsf
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

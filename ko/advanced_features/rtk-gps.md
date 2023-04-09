@@ -4,4 +4,4 @@
 
 또한 [일부 RTK 설정](../gps_compass/du-blox_f9p_heading.md)은 나침반의 대안으로 GPS에서 방향을 제공할 수 있습니다.
 d 
-지원되는 장치와 설정법은 [ 주변 장치 하d드웨어 > GPS 실시간 측위](../gps_compass/rtk_gps.md) 편을 참고하십시오.
+지원되는 장치와 설정법은 [ 주변 장치 하d드웨어 > GPS 실sadfdf시간 측위](../gps_compass/rtk_gps.md) 편을 참고하십시오.

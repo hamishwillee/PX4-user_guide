@@ -4,7 +4,7 @@ This quick start guide shows how to power the [Pixhawk V6X<sup>&reg;</sup>](../f
 
 What changed?
 dd
-## Wiring Chart Overview
+## Wiring Chart Overview 
 
 The image d belowdfadf Messing with a translation. Lets see if we can block this. shows how to connect the most important sensors and peripherals (except the motor and servo outputs). We'll go through each of these in detail in the following sections.
 

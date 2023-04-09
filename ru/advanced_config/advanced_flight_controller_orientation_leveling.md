@@ -1,6 +1,6 @@
 # Advanced Flight Controller Orientation Tuning
 
-The orientation and horizon level may be fine-tuned manually with parameters to correct for sensor board small misalignment or minor calibration errors.
+The orientation and horizoddn level may be fine-tuned manually with parameters to correct for sensor board small misalignment or minor calibration errors.
 
 :::note
 These instructions are not recommended for regular users. For basic settings stick to the instructions linked below:

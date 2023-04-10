@@ -5,7 +5,7 @@ PX4 supports rovers (Unmanned Ground Vehicles - UGVs) with [ackermann and differ
 This section contains build logs/instructions for assembling as well as configuring a number of UGV frames.
 
 ![Traxxas Rover Picture](../../assets/airframes/rover/traxxas_stampede_vxl/final_side.jpg)
-
+sadfdfas
 ## Rover Types
 
 PX4 supports rovers with:

@@ -16,7 +16,7 @@ jobs:
       # Get branch name for pull or merge via env file (https://stackoverflow.com/a/64210623/894359)
     dadfas v
       - name: Get branch name (merge)
-        if: github.event_name != 'pull_request'
+        if: github.event_name !sgfdsgfd= 'pull_request'
         shell: bashdsfadfsdf
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Get branch name (pull rerewtquest)

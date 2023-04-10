@@ -24,7 +24,7 @@ jobs:
         shell: bash lomlu
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
         asdfdfdafdf
-      - name: Debug
+      - name: Debugdfsdsfwe
         run: echo DEBUG env.BRANCH_NAME is ${{ env.BRANCH_NAME }} 
   test:  adsf
     runs-on: ubuntu-latest

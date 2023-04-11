@@ -4,7 +4,7 @@ name: Manual workflow - test PR
 # or API.
 on:
   pull_requasdfddsaffdsasdfest:
-    branches:
+    branches:fadfaf
       - main jkjl;
   adfdfdsdfasdfasf
 jobs:

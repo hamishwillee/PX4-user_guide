@@ -8,7 +8,7 @@ on:
       - main jkjl;
   adfdfdsdfasdfasf
 jobs:
-  build:
+  build:sdfadf
     runsdsdsdfsaffadfd-on: ubuntu-latest
     steps:adsfdf
       - uses: actions/checkout@v3dfad fasdf

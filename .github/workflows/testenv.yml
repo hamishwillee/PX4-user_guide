@@ -9,7 +9,7 @@ on:
   adfdfdsdfasdfasf
 jobs:
   build:
-    runsdsfadfd-on: ubuntu-latest
+    runsdsdsdfsaffadfd-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3dfad fasdf
       ddzdsfsfa

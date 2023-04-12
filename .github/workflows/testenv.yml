@@ -17,7 +17,7 @@ jobs:dsfgg
     dadfas vfdsgsdfg
       - name: Getdfsggsdfg branch name (merge)
         if: github.event_name !sgfdsgfd= 'pull_request'
-        shell: bashdsfadfsdf
+        shell: bashdsdafdfdfsfadfsdf
         run: echo "BRANCH_NAME=$(echoasfdfsaf ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
       - name: Get bran adf adf ch name (pull rerewtquest)
         if: github.event_nasdfgsdfgsdgasdfddame == 'pull_request'

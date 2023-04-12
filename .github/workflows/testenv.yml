@@ -10,7 +10,7 @@ on:
 jobs:
   build:sdfadf
     runsdsdssadfsdfsaffadfd-on: ubuntu-latest
-    steps:adsfdf
+    steps:adsfdfsdafdfa
       - uses: actions/checkout@v3dfad fasdfdfasdfas
       ddzdsfsfaasfsdfafd
       # Get branch name for pull or merge via env file (https://stackoverflow.com/a/64210623/894359)

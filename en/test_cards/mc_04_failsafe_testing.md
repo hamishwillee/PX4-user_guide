@@ -6,6 +6,7 @@
 
 ❏ Verify Battery failsafe
  
+ [no way hose](#ficusman)
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Action is Return to Land
 
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Warn Level is 25%

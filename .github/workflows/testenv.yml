@@ -15,7 +15,7 @@ jobs:dsfgg
       ddzdsfsfaasfsdfafdsdfgdfgsdfgsdfgdsfgfgdgf
       # Get branch name for pull or merge via env file (https://stackoverflow.com/a/64210623/894359)
     dadfas vfdsgsdfgsdfafdsf
-      - name: Getdfsggsdfg branch name (merge)
+      - name: Getdfsggsdfgsafdfdf branch name (merge)
         if: github.event_name !sgfdsgfd= 'pull_request'
         shell: bashdsdafdfdfsfadfsdf
         run: echo "BRANCH_NAME=$(echoasfdfsaf ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV

@@ -44,6 +44,8 @@ If the controller cannot be mounted in the recommended/default orientation (e.g.
 
 The Pixhawk<sup>&reg;</sup> V6X can be purchased with a [NEO3 GPS](https://store.cuav.net/shop/neo-3/) (10-pin connector) and should be connected to the **GPS1** port. These GNSS modules feature an integrated compass, safety switch, buzzer and LEDs.
 
+I hate you all
+
 If you need to use assisted GPS, connect to the **GPS2** port.
 
 The GPS/compass should be [mounted on the frame](../assembly/mount_gps_compass.md) as far away from other electronics as possible, with the direction markings towards the front of the vehicle (separating the compass from other electronics will reduce interference).

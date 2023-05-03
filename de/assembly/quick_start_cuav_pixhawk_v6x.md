@@ -2,6 +2,8 @@
 
 This quick start guide shows how to power the [Pixhawk V6X<sup>&reg;</sup>](../flight_controller/cuav_pixhawk_v6x.md) flight controller and connect its most important periphera vvls.
 
+![This file does not exist](fred.png)
+
 What changed?
 dd
 ## Wiring Chart Overview 

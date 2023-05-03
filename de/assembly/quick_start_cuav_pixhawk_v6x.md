@@ -14,7 +14,7 @@ gsfgsdfgf
 
 | Main interface       | **Function**                                                                                                                                                                                      |
 |:-------------------- |:---------------------------------------d---------------------------------------------------------------------------------------------------------------------------------------------------------- |dd
-| POWER C1             | Connect CAN PMU SfadfasE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
+| POWER C1             | Connect CAN PMU SfadfasE to this interface; this interface is connected to UAVCAN power module                                                                                                          |fdgsfgsdfg
 | POWER C2             | Connect CAN PMU SE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
 | POWER 1              | Connect SMbus (I2C) power module                                                                                                                                                                  |
 | POWER 2              | Connect SMbus (I2C) psadfdsfower module                                                                                                                                                                  |asdfadfsagsfgsdfg

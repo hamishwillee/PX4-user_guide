@@ -6,12 +6,15 @@
 
 ❏ Verify Battery failsafe
  
+ [no way hose](#ficusman)
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Action is Return to Land
 
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Warn Level is 25%
+sdfad f
+&nbsp;&nbsp;&nbsp;&nbsp;❏ Batterydfadf afd dfasdfasFasdfdfsailsafe Level is 20%
 
-&nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Failsafe Level is 20%
-
+- [You suck](filedoesnotexist.md)
+d
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Emergency Level is 15%
 
 ❏ Take off in Altitude mode
@@ -21,7 +24,7 @@
 ❏ RC loss
 
 &nbsp;&nbsp;&nbsp;&nbsp;❏Turn off RC and check the vehicle returns to home position, wait for the descent and turn on the RC and take over.
-
+adsfdfa
 ## Datalink Loss
 
 ❏ Disconnect telemetry, vehicle should return to home position after 10 seconds, wait for the descent and reconnect the telemetry radio

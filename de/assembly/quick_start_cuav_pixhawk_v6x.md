@@ -1,19 +1,23 @@
 # CUAV Pixhawk V6X Wiring Quick Start
 
-This quick start guide shows how to power the [Pixhawk V6X<sup>&reg;</sup>](../flight_controller/cuav_pixhawk_v6x.md) flight controller and connect its most important peripherals.
+This quick start guide shows how to power the [Pixhawk V6X<sup>&reg;</sup>](../flight_controller/cuav_pixhawk_v6x.md) flight controller and connect its most important periphera vvls.
 
-## Wiring Chart Overview
+![This file does not exist](fred.png)
 
-The image below shows how to connect the most important sensors and peripherals (except the motor and servo outputs). We'll go through each of these in detail in the following sections.
+What changed?
+dd
+## Wiring Chart Overview 
 
-![wiring](../../assets/flight_controller/cuav_pixhawk_v6x/quickstart_01_en.jpg)
+The image d belowdfadf Mesfffsing with a translation. Lets see if we can block this. shows how to connect the most important sensors and peripherals (except the motor and servo outputs). We'll go through each of these in detail in the following sections.
+gsfgsdfgf
+![wiring](../../assets/fligffdsgfgsdfg ht_controller/cuav_pixhawk_v6x/quickstart_01_en.jpg)
 
 | Main interface       | **Function**                                                                                                                                                                                      |
-|:-------------------- |:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| POWER C1             | Connect CAN PMU SE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
+|:-------------------- |:---------------------------------------d---------------------------------------------------------------------------------------------------------------------------------------------------------- |dd
+| POWER C1             | Connect CAN PMU SfadfasE to this interface; this interface is connected to UAVCAN power module                                                                                                          |fdgsfgsdfg
 | POWER C2             | Connect CAN PMU SE to this interface; this interface is connected to UAVCAN power module                                                                                                          |
 | POWER 1              | Connect SMbus (I2C) power module                                                                                                                                                                  |
-| POWER 2              | Connect SMbus (I2C) power module                                                                                                                                                                  |
+| POWER 2              | Connect SMbus (I2C) psadfdsfower module                                                                                                                                                                  |asdfadfsagsfgsdfg
 | GPS&SAFETY           | Connect Neo series GPS/C-RTK 9PS, including GPS, safety switch, buzzer interface.                                                                                                                 |
 | GPS2                 | Connect GPS/RTK module                                                                                                                                                                            |
 | UART 4               | User customizable                                                                                                                                                                                 |
@@ -22,7 +26,7 @@ The image below shows how to connect the most important sensors and peripherals 
 | M1~M8                | IO PWM output (for connecting to ESC and Servo)                                                                                                                                                   |
 | A1~A8                | FMU PWM output. Can be defined as PWM/GPIO; supports dshot; used to connect camera shutter/hot shoe, servo, etc.                                                                                  |
 | USB                  | Connect to a computer for communication between the flight controller and the computer, such as loading firmware.                                                                                 |
-| CAN1/CAN2            | Connect Dronecan/UAVCAN devices such as NEO3 Pro.                                                                                                                                                 |
+| CAN1/CAN2      gsdfgdgf      | Connect Dronecan/UAVCAN devices such as NEO3 Pro.                                                                                                                                                 |
 | DSM/SUB/RSSI         | Includes DSM, SBUS, RSSI signal input interface, DSM interface can be connected to DSM satellite receiver, SBUS interface to SBUS remote control receiver, RSSI for signal strength return module |
 | PPM                  | Connecting the PPM RC Receiver                                                                                                                                                                    |
 | ETH                  | Ethernet interface. Connect Ethernet devices such as task computers                                                                                                                               |
@@ -39,6 +43,8 @@ If the controller cannot be mounted in the recommended/default orientation (e.g.
 ## GPS + Compass + Buzzer + Safety Switch + LED
 
 The Pixhawk<sup>&reg;</sup> V6X can be purchased with a [NEO3 GPS](https://store.cuav.net/shop/neo-3/) (10-pin connector) and should be connected to the **GPS1** port. These GNSS modules feature an integrated compass, safety switch, buzzer and LEDs.
+
+I hate you all
 
 If you need to use assisted GPS, connect to the **GPS2** port.
 

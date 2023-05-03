@@ -5,7 +5,7 @@ PX4 supports rovers (Unmanned Ground Vehicles - UGVs) with [ackermann and differ
 This section contains build logs/instructions for assembling as well as configuring a number of UGV frames.
 
 ![Traxxas Rover Picture](../../assets/airframes/rover/traxxas_stampede_vxl/final_side.jpg)
-
+sadfdfas
 ## Rover Types
 
 PX4 supports rovers with:
@@ -27,7 +27,7 @@ For vehicles with Ackermann steering:
 1. In the [Airframe](../config/airframe.md) configuration, select the *Generic Ground Vehicle*.
 1. Set the [CA_AIRFRAME](../advanced_config/parameter_reference.md#CA_AIRFRAME) parameter to **Rover (Ackermann)** (5).
 1. Follow the [Actuators document](../config/actuators.md) to map the steering and throttle outputs as displayed.
-
+dfadfadf
 For vehicles with Differential steering:
 
 1. In the [Airframe](../config/airframe.md) configuration, select either the _Aion Robotics R1 UGV_ or _NXP Cup car: DF Robot GPX_

@@ -34,7 +34,7 @@ Missions are uploaded onto a SD card that needs to be inserted **before** bootin
      1. 如果存储了任务, 并且PX4着陆:
    - 在旋翼机上 PX4 将执行[任务/飞行计划](../flying/missions.md). 如果任务没有 `TAKEOFF` 命令，则在从当前步骤执行飞行计划的剩余部分之前，PX4 将使飞机飞行到最小高度。
 
-   - 在固定翼飞行器上，PX4 不会自动起飞（自动驾驶仪将检测运动并将油门设置为零）。 If the currently active waypoint is a Takeoff, the system will automatically takeoff (see [FW Takeoff/Landing in Mission](#fixed-wing-mission-takeoff-landing)).</ul> 
+   - 在固定翼飞行器上，PX4 不会自动起飞（自动驾驶仪将检测运动并将油门设置为零）。 If the currently active waypoint is a Takeoff, the system will automatically takeoff (see [FW Takeoff/Landing in Mission](#fw-mission-takeoff)).</ul> 
 
 1. 如果没有存储任务，或者 PX4 已完成所有任务命令： 
       * 如果正在飞行，飞机将会留待。
@@ -195,7 +195,7 @@ MC vehicles will change the *speed* when approaching or leaving a waypoint based
 
 - 对于多旋翼，该半径由 [NAV_ACC_RAD](../advanced_config/parameter_reference.md#NAV_ACC_RAD) 定义。
 - 对于固定翼，接受半径由 “L1 distance” 定义。 
-    - L1 距离是根据两个参数计算的： [FW_L1_DAMPING](../advanced_config/parameter_reference.md#FW_L1_DAMPING) 和 [FW_L1_PERIOD](../advanced_config/parameter_reference.md#FW_L1_PERIOD)，还有当前地速。
+    - The L1 distance is computed from two parameters: [NPFG_DAMPING](../advanced_config/parameter_reference.md#NPFG_DAMPING) and [NPFG_PERIOD](../advanced_config/parameter_reference.md#NPFG_PERIOD), and the current ground speed.
   - 默认情况下，约 70米。
   - The equation is: $$L_{1_{distance}}=\frac{1}{\pi}L_{1_{damping}}L_{1_{period}}\left \| \vec{v}_{ {xy}_{ground} } \right \|$$
 

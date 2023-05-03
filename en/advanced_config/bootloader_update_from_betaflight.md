@@ -11,7 +11,7 @@ To install the PX4 bootloader using the *Betaflight Configurator*:
 1. You should have downloaded already the pre-built bootloader binary (this depends on the board you want to flash).
 1. Download the [Betaflight Configurator](https://github.com/betaflight/betaflight-configurator/releases) for your platform.
    :::tip
-   If using the *Chrome* web browser, a simple cross-platform alternative is to install the configurator as an [extension from here]( https://chrome.google.com/webstore/detail/betaflight-configurator/kdaghagfopacdngbohiknlhcocjccjao).
+   If using the *Chrome* web browser, a simple cross-platform alternative is to install the configurator as an [extension from here](https://chrome.google.com/webstore/detail/betaflight-configurator/kdaghagfopacdngbohiknlhcocjccjao).
    :::
 1. Connect the board to your PC and start the Configurator.
 1. Press the **Load Firmware [Local]** button
@@ -86,7 +86,7 @@ The button can be released after the board is powered up.
 The [Holybro Kakute H7 v2](../flight_controller/kakuteh7v2.md) and mini flight controllers may require that you first run an additional command to erase flash parameters (in order to fix problems with parameter saving):
 
 ```
-dfu-util -a 0 --dfuse-address:force:mass-erase:leave 0x08000000 -D  build/<target>/<target>.bin
+dfu-util -a 0 --dfuse-address 0x08000000:force:mass-erase:leave -D build/<target>/<target>.bin
 ```
 
 The command may generate an error which can be ignored.

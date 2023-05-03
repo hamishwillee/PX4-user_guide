@@ -30,7 +30,7 @@ Missions are usually created in a ground control station (e.g. [QGroundControl](
    - On copters PX4 will treat a takeoff item as a normal waypoint if already flying.
 1. 미션이 저장되고 PX4가 착륙한 경우 :
    - 헬리콥터에서 PX4는 [미션/비행 계획](../flying/missions.md)을 실행합니다. 임무에 `이륙` 명령이 없는 경우 PX4는 현재 단계에서 나머지 비행 계획을 실행하기 전에 기체를 최소 고도로 상승시킵니다.
-   - 고정익 차량에서는 PX4가 자동으로 이륙하지 않습니다 (자동조종장치가 움직임 부족을 감지하고 스로틀을 0으로 설정합니다). If the currently active waypoint is a Takeoff, the system will automatically takeoff (see [FW Takeoff/Landing in Mission](#fixed-wing-mission-takeoff-landing)).
+   - 고정익 차량에서는 PX4가 자동으로 이륙하지 않습니다 (자동조종장치가 움직임 부족을 감지하고 스로틀을 0으로 설정합니다). If the currently active waypoint is a Takeoff, the system will automatically takeoff (see [FW Takeoff/Landing in Mission](#fw-mission-takeoff)).
 1. 저장된 임무가 없거나 PX4가 모든 임무 명령 실행을 완료한 경우 :
    * 비행하면 기체는 배회합니다.
    * 착륙하면 기체는 "대기"합니다.
@@ -176,7 +176,7 @@ PX4는 이전 웨이포인트에서 현재 목표까지 직선을 따라갈 것�
 기체는 허용 반경에 들어 오자마자 다음 웨이포인트로 전환합니다.
 - 멀티콥터의 경우 이 반경은 [NAV_ACC_RAD](../advanced_config/parameter_reference.md#NAV_ACC_RAD)로 정의됩니다.
 - 고정익의 경우 허용 반경은 "L1 거리"로 정의됩니다.
-  - L1 거리는 [FW_L1_DAMPING](../advanced_config/parameter_reference.md#FW_L1_DAMPING) 및 [FW_L1_PERIOD](../advanced_config/parameter_reference.md#FW_L1_PERIOD)의 두 매개 변수와 현재지면 속도에서 계산됩니다.
+  - The L1 distance is computed from two parameters: [NPFG_DAMPING](../advanced_config/parameter_reference.md#NPFG_DAMPING) and [NPFG_PERIOD](../advanced_config/parameter_reference.md#NPFG_PERIOD), and the current ground speed.
   - 기본적으로 약 70 미터입니다.
   - 방정식: $$L_{1_{distance}}=\frac{1}{\pi}L_{1_{damping}}L_{1_{period}}\left \| \vec{v}*{ {xy}*{ground} } \right \|$$
 

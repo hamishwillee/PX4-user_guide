@@ -4,6 +4,12 @@ The ROS 2-PX4 architecture provides a deep integration between ROS 2 and PX4, al
 
 This topic provides an overview of the architecture and application pipeline, and explains how to setup and use ROS 2 with PX4.
 
+:::note
+The [XRCE-DDS](../middleware/xrce_dds.md) middleware middleware is supported in releases from **PX4 v1.14** 
+**PX4 v1.13** does not support ROS 2 via [XRCE-DDS](../middleware/xrce_dds.md) middleware (see [PX4 v1.13 Docs](https://docs.px4.io/v1.13/en/ros/ros2_comm.html) for information).
+<!-- remove this when there are PX4 v1.14 docs for some months -->
+:::
+
 ## Overview
 
 The application pipeline for ROS 2 is very straightforward, thanks to the use of the [XRCE-DDS](../middleware/xrce_dds.md) communications middleware.
@@ -86,7 +92,7 @@ For ROS 2 to communicate with PX4, a XRCE-DDS client must be running on PX4, con
 
 #### Setup the Agent
 
-The agent can be installed onto the companion computer in a [number of ways](../middleware/xrce_dds.md#xrce-dds-agent-installation-usage).
+The agent can be installed onto the companion computer in a [number of ways](../middleware/xrce_dds.md#xrce-dds-agent-installation).
 Below we show how to build the agent "standalone" from source and connect to a client running on the PX4 simulator.
 
 To setup and start the agent:
@@ -335,7 +341,7 @@ public:
 :::note
 The subscription sets a QoS profile based on `rmw_qos_profile_sensor_data`.
 This is needed because the default ROS 2 QoS profile for subscribers is incompatible with the PX4 profile for publishers.
-For more information see: [ROS 2 Subscriber QoS Settings](#ros2-subscriber-qos-settings),
+For more information see: [ROS 2 Subscriber QoS Settings](#ros-2-subscriber-qos-settings),
 :::
 
 The lines below create a publisher to the `SensorCombined` uORB topic, which can be matched with one or more compatible ROS 2 subscribers to the `fmu/sensor_combined/out` ROS 2 topic.

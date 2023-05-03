@@ -12,6 +12,8 @@
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Warn Level is 25%
 sdfad f
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Batterydfadf afd dfasdfasFasdfdfsailsafe Level is 20%
+
+- [You suck](filedoesnotexist.md)
 d
 &nbsp;&nbsp;&nbsp;&nbsp;❏ Battery Emergency Level is 15%
 

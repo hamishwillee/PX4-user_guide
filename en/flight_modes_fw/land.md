@@ -37,11 +37,17 @@ The vehicle will flare if configured to do so (see [Flaring](../flight_modes/mis
 
 Land mode behaviour can be configured using the parameters below.
 
-| Parameter                                                                                             | Description                                                                  |
-| ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| <a id="NAV_LOITER_RAD"></a>[NAV_LOITER_RAD](../advanced_config/parameter_reference.md#NAV_LOITER_RAD) | The loiter radius that the controller tracks for the whole landing sequence. |
-| <a id="FW_LND_ANG"></a>[FW_LND_ANG](../advanced_config/parameter_reference.md#FW_LND_ANG)             | The flight path angle setpoint.                                              |
-| <a id="FW_LND_AIRSPD"></a>[FW_LND_AIRSPD](../advanced_config/parameter_reference.md#FW_LND_AIRSPD)    | The airspeed setpoint.                                                       |
+| Parameter                                                   | Description                                                                  |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| <a id="NAV_LOITER_RAD"></a>[NAV_LOITER_RAD][nav_loiter_rad] | The loiter radius that the controller tracks for the whole landing sequence. |
+| <a id="FW_LND_ANG"></a>[FW_LND_ANG][fw_lnd_ang]             | The flight path angle setpoint.                                              |
+| <a id="FW_LND_AIRSPD"></a>[FW_LND_AIRSPD][fw_lnd_airspd]    | The airspeed setpoint.                                                       |
+
+<!-- links for table above -->
+
+[nav_loiter_rad]: ../advanced_config/parameter_reference.md#NAV_LOITER_RAD
+[fw_lnd_ang]: ../advanced_config/parameter_reference.md#FW_LND_ANG
+[fw_lnd_airspd]: ../advanced_config/parameter_reference.md#FW_LND_AIRSPD
 
 ## See Also
 
